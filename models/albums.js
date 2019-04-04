@@ -3,7 +3,7 @@ var Schema = mg.Schema;
 
 var albumSchema = new Schema({
     title: String,
-    release: Date,
+    release: String,
     genre: String,
     cover_url: String,
     tracks: Array
