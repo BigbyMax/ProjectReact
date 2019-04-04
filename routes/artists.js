@@ -62,8 +62,9 @@ router.get('/artists/:id/likes', (req, res)=>{
     });
 });
 
-//Ici on récupère les informations d'un.e artiste
-router.get('/artists/:id', (req, res)=>{
+//Ici on récupère le nombre de likes d'un.e artiste
+router.get('/artists/:id/likes', (req, res)=>{
+    var likes=0;
     Artist.findOne({_id: req.params.id}, (err, artist)=>{
         if(err){
             return res.send(err);
@@ -74,9 +75,25 @@ router.get('/artists/:id', (req, res)=>{
         console.log(artist.birth);
         //boucle pour parcourir les albums
         artist.Albums.forEach((item, array) => {
-            console.log(item);
+            //console.log('album : ' + item);
+            Album.findById(item, (err, album) =>{
+                if(err){
+                    return res.send(err);
+                }
+                album.tracks.forEach((song, array) =>{
+                    //console.log('tracks : ' + song);
+                    Track.findById(song,(err, track) =>{
+                        if(err){
+                            return res.send(err);
+                        };
+                        console.log(track);
+                       likes = likes + Number(track.likes);
+                    });
+                });
+            });
             
         });
+        console.log('Le total de like pour TayTay est de : ' + likes);
     });
 });
 
