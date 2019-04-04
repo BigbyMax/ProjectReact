@@ -1,0 +1,23 @@
+{
+  "name": "movie-db-app",
+  "version": "0.0.1",
+  "private": true,
+  "description": "Tentative de faire le TP avec les routes et l'API REST",
+  "main": "index.js",
+  "scripts": {
+    "start": "node ./bin/www"
+  },
+  "keywords": [
+    "CRUD",
+    "REST",
+    "API"
+  ],
+  "author": "Maxime",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.18.0",
+    "body-parser": "^1.18.3",
+    "express": "^4.16.4",
+    "mongoose": "^5.4.21"
+  }
+}
