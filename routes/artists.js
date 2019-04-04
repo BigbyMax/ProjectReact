@@ -94,9 +94,10 @@ router.get('/artists/:id/likes', (req, res)=>{
 });
 
 //Ici, on va essayer d'afficher le nombre d'écoute des musiques de tous les albums de l'artiste, d'où le chemin /listenings
-router.get('/artists/:id/listenings', (req, res)=>{
-    var listenings=0;
-    Artist.findOne({_id: req.params.id}, (err, artist)=>{
+router.get('/artists/:id/listenings', async (req, res)=>{
+    listenings=0;
+    try{
+    await Artist.findOne({_id: req.params.id}, (err, artist)=>{
         if(err){
             return res.send(err);
         }
@@ -105,7 +106,7 @@ router.get('/artists/:id/listenings', (req, res)=>{
         console.log(artist.followers);
         console.log(artist.birth);
         //boucle pour parcourir les albums
-        artist.Albums.forEach((item, array) => {
+         artist.Albums.forEach((item, array) => {
             //console.log('album : ' + item);
             Album.findById(item, (err, album) =>{
                 if(err){
@@ -119,15 +120,19 @@ router.get('/artists/:id/listenings', (req, res)=>{
                         };
                         console.log(track);
                         listenings = listenings + Number(track.listenings);
+                        console.log(listenings);
                     });
                 });
             });
             
         });
         console.log('Le total d écoutes pour TayTay est de : ' + listenings);
-        res.json(listenings);
+        
     });
+    } catch (e){
 
+    }
+    res.json(listenings);
 });
 
 

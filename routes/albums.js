@@ -1,4 +1,5 @@
 var Album = require('../models/albums');
+var Track = require('../models/tracks');
 var ex = require('express');
 var router = ex.Router();
 
@@ -29,6 +30,16 @@ router.get('/albums/:id', (req, res)=>{
             return res.send(err);
         }
         res.json(album);
+    });
+});
+
+//Date de sortie des albums
+router.get('/albums/:id/release', (req, res)=>{
+    Album.findOne({_id: req.params.id}, (err, album)=>{
+        if(err){
+            return res.send(err);
+        }
+        res.json(album.release);
     });
 });
 
