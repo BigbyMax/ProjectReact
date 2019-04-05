@@ -120,6 +120,23 @@ router.get('/albums/:id/release', (req, res)=>{
     });
 });
 
+router.put('/albums/:id', (req, res)=>{
+    Album.findOne({_id: req.params.id}, (err, album)=>{
+        if(err){
+            return res.send(err);
+        };
+        for(prop in req.body){
+            album[prop] = req.body[prop];
+        };
+        album.save((err)=>{
+            if(err){
+                return res.send(err);
+            }
+            res.json({message: 'Album mis à jour'});
+        });
+    });
+});
+
 router.delete('/albums/:id', (req,res)=>{
     console.log(req.params.id);
         Album.findByIdAndDelete(req.params.id, (err, album)=>{

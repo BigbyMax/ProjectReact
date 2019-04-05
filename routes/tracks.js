@@ -57,6 +57,23 @@ router.get('/tracks/:id/listenings', (req, res)=>{
     });
 });
 
+router.put('/tracks/:id', (req, res)=>{
+    Track.findOne({_id: req.params.id}, (err, track)=>{
+        if(err){
+            return res.send(err);
+        };
+        for(prop in req.body){
+            track[prop] = req.body[prop];
+        };
+        track.save((err)=>{
+            if(err){
+                return res.send(err);
+            }
+            res.json({message: 'Musique mise à jour'});
+        });
+    });
+});
+
 router.delete('/tracks/:id', (req,res)=>{
     console.log(req.params.id);
         Track.findByIdAndDelete(req.params.id, (err, track)=>{

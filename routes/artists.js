@@ -141,6 +141,23 @@ router.get('/artists/:id/listenings', (req, res)=>{
     });
 });
 
+router.put('/artists/:id', (req, res)=>{
+    Artist.findOne({_id: req.params.id}, (err, artist)=>{
+        if(err){
+            return res.send(err);
+        };
+        for(prop in req.body){
+            artist[prop] = req.body[prop];
+        };
+        artist.save((err)=>{
+            if(err){
+                return res.send(err);
+            }
+            res.json({message: 'Artiste mis.e à jour'});
+        });
+    });
+});
+
 router.delete('/artists/:id', (req,res)=>{
     console.log(req.params.id);
         Artist.findByIdAndDelete(req.params.id, (err, artist)=>{
