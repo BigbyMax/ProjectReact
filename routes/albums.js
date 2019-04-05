@@ -39,6 +39,22 @@ router.get('/albums/:id', (req, res)=>{
     });
 });
 
+//Récupérer les musiques d'un album
+router.get('/albums/:id/tracks', (req, res)=>{
+    var songs;
+    comptMusic = 0;
+    nbrMusic = 0;
+    Album.findOne({_id: req.params.id}, (err, album)=>{
+        if(err){
+            return res.send(err);
+        }
+        album.tracks.forEach((track, array)=>{
+            songs.push(track);
+            res.json(songs);
+        });
+    });
+});
+
 //Récupérer le nombre de likes générés par un album
 router.get('/albums/:id/likes', (req, res)=>{
     var likes=0;

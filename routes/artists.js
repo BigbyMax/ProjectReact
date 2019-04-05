@@ -158,6 +158,19 @@ router.put('/artists/:id', (req, res)=>{
     });
 });
 
+
+
+router.post('/artists/:id/album', function(req, res){
+    var album = new Album(req.body);
+    album.save(function(err){
+        if (err){
+            return res.send(err);
+        }
+        res.send({message: 'Album added'});
+    });  
+});
+
+
 router.delete('/artists/:id', (req,res)=>{
     console.log(req.params.id);
         Artist.findByIdAndDelete(req.params.id, (err, artist)=>{
