@@ -33,12 +33,6 @@ router.get('/artists/:id', (req, res)=>{
             return res.send(err);
         }
         res.json(artist);
-        console.log(artist.nom);
-        console.log(artist.followers);
-        console.log(artist.birth);
-        console.log(artist.Albums);
-        
-        //console.log(artist.Albums[0]);
     });
 });
 
@@ -50,91 +44,96 @@ router.get('/artists/:id/followers', (req, res)=>{
             return res.send(err);
         }
         res.json(artist.followers);
-        
-        //console.log(artist.Albums[0]);
     });
 });
 
 //Ici, on va essayer d'afficher les likes de tous les albums de l'artiste, d'où le chemin /likes
 router.get('/artists/:id/likes', (req, res)=>{
     var likes=0;
+    comptMusic = 0;
+    nbrMusic = 0;
     Artist.findOne({_id: req.params.id}, (err, artist)=>{
         if(err){
             return res.send(err);
         }
-        //res.json(artist);    
-        console.log(artist.nom);
-        console.log(artist.followers);
-        console.log(artist.birth);
-        //boucle pour parcourir les albums
+
+        //On commence une première boucle pour parcourir la liste des albums
         artist.Albums.forEach((item, array) => {
-            //console.log('album : ' + item);
             Album.findById(item, (err, album) =>{
                 if(err){
                     return res.send(err);
                 }
+
+                //On enregistre le nombre total de musiques pour savoir quand envoyer le résultat (res.json(likes))
+                nbrMusic = nbrMusic + album.tracks.length;
+
+                //On commence une seconde boucle pour parcourir la liste des musiques par album
                 album.tracks.forEach((song, array) =>{
-                    //console.log('tracks : ' + song);
                     Track.findById(song,(err, track) =>{
                         if(err){
                             return res.send(err);
                         };
-                        console.log(track);
+
+                        //On ajoute au compteur de likes la valeur qui se trouve dans chaque musique
                         likes = likes + Number(track.likes);
-                    });
+
+                        //On incrémente le compteur des musiques
+                        comptMusic = comptMusic + 1;
+
+                        //Si le compteur de musiques atteint le nombre total de musiques, on peut retourner le résultat (res.json)
+                        if(comptMusic == nbrMusic){
+                            console.log('Le total de like pour TayTay est de : ' + likes);
+                            res.json(likes);
+                        };
+                    });        
                 });
             });
-            console.log('Le total de like pour TayTay est de : ' + likes);
-            res.json(likes);
-            
         });
-
     });
-
 });
 
 //Ici, on va essayer d'afficher le nombre d'écoute des musiques de tous les albums de l'artiste, d'où le chemin /listenings
-router.get('/artists/:id/listenings', async (req, res)=>{
+router.get('/artists/:id/listenings', (req, res)=>{
     listenings=0;
-    try{
-    await Artist.findOne({_id: req.params.id}, (err, artist)=>{
+    comptMusic = 0;
+    nbrMusic = 0;
+
+    Artist.findOne({_id: req.params.id}, (err, artist)=>{
         if(err){
             return res.send(err);
         }
-        //res.json(artist);    
-        console.log(artist.nom);
-        console.log(artist.followers);
-        console.log(artist.birth);
         //boucle pour parcourir les albums
          artist.Albums.forEach((item, array) => {
-            //console.log('album : ' + item);
             Album.findById(item, (err, album) =>{
                 if(err){
                     return res.send(err);
                 }
+
+                //On enregistre le nombre total de musiques pour savoir quand envoyer le résultat (res.json(listenings))
+                nbrMusic = nbrMusic + album.tracks.length;
+
                 album.tracks.forEach((song, array) =>{
-                    //console.log('tracks : ' + song);
                     Track.findById(song,(err, track) =>{
                         if(err){
                             return res.send(err);
                         };
-                        console.log(track);
+                        //On ajoute au compteur d écoutes la valeur qui se trouve dans chaque musique
                         listenings = listenings + Number(track.listenings);
-                        console.log(listenings);
+
+                        //On incrémente le compteur des musiques
+                        comptMusic = comptMusic + 1;
+
+                        //Si le compteur de musiques atteint le nombre total de musiques, on peut retourner le résultat (res.json)
+                        if(comptMusic == nbrMusic){
+                            console.log('Le total d écoutes pour TayTay est de : ' + listenings);
+                            res.json(listenings);
+                        };
                     });
                 });
             });
-            
         });
-        console.log('Le total d écoutes pour TayTay est de : ' + listenings);
-        
     });
-    } catch (e){
-
-    }
-    res.json(listenings);
 });
-
 
 router.delete('/artists/:id', (req,res)=>{
     console.log(req.params.id);
