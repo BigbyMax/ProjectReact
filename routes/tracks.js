@@ -33,6 +33,24 @@ router.get('/tracks/:id', (req, res)=>{
     });
 });
 
+router.get('/tracks/:id/likes', (req, res)=>{
+    Track.findOne({_id: req.params.id}, (err, track)=>{
+        if(err){
+            return res.send(err);
+        }
+        res.json(track.likes);
+    });
+});
+
+router.get('/tracks/:id/listenings', (req, res)=>{
+    Track.findOne({_id: req.params.id}, (err, track)=>{
+        if(err){
+            return res.send(err);
+        }
+        res.json(track.listenings);
+    });
+});
+
 router.delete('/tracks/:id', (req,res)=>{
     console.log(req.params.id);
         Track.findByIdAndDelete(req.params.id, (err, track)=>{
