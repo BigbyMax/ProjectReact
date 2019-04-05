@@ -21,6 +21,18 @@ router.get('/artists', function(req, res){
     });
 });
 
+//Récupérer les albums d'un.e artiste
+router.get('/artists/:id/albums', (req, res)=>{
+    Artist.findOne({_id: req.params.id}, (err, artist)=>{
+        if(err){
+            return res.send(err);
+        }
+        Album.find({"_id" : { "$in" : artist.albums}}, (err, album)=>{
+            res.json(album);
+        });
+    });
+});
+
 router.post('/artists', function(req, res){
     console.log('post an artist');
     var artist = new Artist(req.body);
