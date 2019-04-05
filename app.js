@@ -4,6 +4,7 @@ var mg = require('mongoose');
 var albums = require('./routes/albums');
 var tracks = require('./routes/tracks');
 var artists = require('./routes/artists');
+var stats = require('./routes/globalstats');
 var app = ex();
 //var ax = require('axios');
 
@@ -16,6 +17,7 @@ app.use(bP.urlencoded());
 app.use('/api', tracks);
 app.use('/api', albums);
 app.use('/api', artists);
+app.use('/api', stats);
 
 
 

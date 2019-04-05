@@ -9,6 +9,8 @@ router.get('/albums', function(req, res){
         if (err){
             return res.send(err);
         }
+        res.header("Access-Control-Allow-Origin", "*");
+        res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
         res.json(albums);
     });
 });
@@ -19,6 +21,8 @@ router.post('/albums', function(req, res){
         if (err){
             return res.send(err);
         }
+        res.header("Access-Control-Allow-Origin", "*");
+        res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
         res.send({message: 'Album added'});
     });  
 });
@@ -29,6 +33,8 @@ router.get('/albums/:id', (req, res)=>{
         if(err){
             return res.send(err);
         }
+        res.header("Access-Control-Allow-Origin", "*");
+        res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
         res.json(album);
     });
 });
@@ -61,6 +67,8 @@ router.get('/albums/:id/likes', (req, res)=>{
                 //Si le compteur de musiques atteint le nombre total de musiques, on peut retourner le résultat (res.json)
                 if(comptMusic == nbrMusic){
                     console.log('Le total de likes pour l album est de : ' + likes);
+                    res.header("Access-Control-Allow-Origin", "*");
+                    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
                     res.json(likes);
                 };
             });        
@@ -96,6 +104,8 @@ router.get('/albums/:id/listenings', (req, res)=>{
                 //Si le compteur de musiques atteint le nombre total de musiques, on peut retourner le résultat (res.json)
                 if(comptMusic == nbrMusic){
                     console.log('Le total d ecoutes pour l album est de : ' + listenings);
+                    res.header("Access-Control-Allow-Origin", "*");
+                    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
                     res.json(listenings);
                 };
             });        
@@ -109,6 +119,8 @@ router.get('/albums/:id/release', (req, res)=>{
         if(err){
             return res.send(err);
         }
+        res.header("Access-Control-Allow-Origin", "*");
+        res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
         res.json(album.release);
     });
 });
@@ -120,6 +132,8 @@ router.delete('/albums/:id', (req,res)=>{
             console.log('its an error');
             return res.send(err);
         }
+        res.header("Access-Control-Allow-Origin", "*");
+        res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
         res.json({message: 'Album deleted'});
     });
 });

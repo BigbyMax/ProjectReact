@@ -8,6 +8,8 @@ router.get('/tracks', function(req, res){
         if (err){
             return res.send(err);
         }
+        res.header("Access-Control-Allow-Origin", "*");
+        res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
         res.json(tracks);
     });
 });
@@ -18,6 +20,8 @@ router.post('/tracks', function(req, res){
         if (err){
             return res.send(err);
         }
+        res.header("Access-Control-Allow-Origin", "*");
+        res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
         res.send({message: 'Track added'});
     });  
 });
@@ -29,6 +33,8 @@ router.get('/tracks/:id', (req, res)=>{
         if(err){
             return res.send(err);
         }
+        res.header("Access-Control-Allow-Origin", "*");
+        res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
         res.json(track);
     });
 });
@@ -38,6 +44,8 @@ router.get('/tracks/:id/likes', (req, res)=>{
         if(err){
             return res.send(err);
         }
+        res.header("Access-Control-Allow-Origin", "*");
+        res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
         res.json(track.likes);
     });
 });
@@ -47,6 +55,8 @@ router.get('/tracks/:id/listenings', (req, res)=>{
         if(err){
             return res.send(err);
         }
+        res.header("Access-Control-Allow-Origin", "*");
+        res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
         res.json(track.listenings);
     });
 });
@@ -58,6 +68,8 @@ router.delete('/tracks/:id', (req,res)=>{
             console.log('its an error');
             return res.send(err);
         }
+        res.header("Access-Control-Allow-Origin", "*");
+        res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
         res.json({message: 'Track deleted'});
     });
 });

@@ -11,6 +11,8 @@ router.get('/artists', function(req, res){
         if (err){
             return res.send(err);
         }
+        res.header("Access-Control-Allow-Origin", "*");
+        res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
         res.json(artists);
     });
 });
@@ -22,6 +24,8 @@ router.post('/artists', function(req, res){
         if (err){
             return res.send(err);
         }
+        res.header("Access-Control-Allow-Origin", "*");
+        res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
         res.send({message: 'Artist added'});
     });  
 });
@@ -32,6 +36,8 @@ router.get('/artists/:id', (req, res)=>{
         if(err){
             return res.send(err);
         }
+        res.header("Access-Control-Allow-Origin", "*");
+        res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
         res.json(artist);
     });
 });
@@ -43,6 +49,8 @@ router.get('/artists/:id/followers', (req, res)=>{
         if(err){
             return res.send(err);
         }
+        res.header("Access-Control-Allow-Origin", "*");
+        res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
         res.json(artist.followers);
     });
 });
@@ -83,6 +91,8 @@ router.get('/artists/:id/likes', (req, res)=>{
                         //Si le compteur de musiques atteint le nombre total de musiques, on peut retourner le résultat (res.json)
                         if(comptMusic == nbrMusic){
                             console.log('Le total de like pour TayTay est de : ' + likes);
+                            res.header("Access-Control-Allow-Origin", "*");
+                            res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
                             res.json(likes);
                         };
                     });        
@@ -126,6 +136,8 @@ router.get('/artists/:id/listenings', (req, res)=>{
                         //Si le compteur de musiques atteint le nombre total de musiques, on peut retourner le résultat (res.json)
                         if(comptMusic == nbrMusic){
                             console.log('Le total d écoutes pour TayTay est de : ' + listenings);
+                            res.header("Access-Control-Allow-Origin", "*");
+                            res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
                             res.json(listenings);
                         };
                     });
@@ -142,6 +154,8 @@ router.delete('/artists/:id', (req,res)=>{
             console.log('its an error');
             return res.send(err);
         }
+        res.header("Access-Control-Allow-Origin", "*");
+        res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
         res.json({message: 'Artist deleted'});
     });
 });
