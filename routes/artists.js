@@ -182,6 +182,22 @@ router.post('/artists/:id/album', function(req, res){
     });  
 });
 
+router.post('/artists/:id/albums', function(req, res){
+
+    var album = new Album(req.body);
+    album.save(function(err, albums){
+        if (err){
+            return res.send(err);
+        }
+        console.log(tracks.id);
+        Artist.findOneAndUpdate({_id: req.params.id}, {$push: {albums: albums.id}}, (err)=>{
+            res.send({message: 'Album ajouté'});
+        });
+        
+    });  
+    
+});
+
 
 router.delete('/artists/:id', (req,res)=>{
     console.log(req.params.id);

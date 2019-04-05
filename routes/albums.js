@@ -136,18 +136,19 @@ router.get('/albums/:id/release', (req, res)=>{
 });
 
 router.post('/albums/:id/tracks', function(req, res){
+
     var track = new Track(req.body);
-    track.save((err, tracks)=>{
+    track.save(function(err, tracks){
         if (err){
             return res.send(err);
         }
+        console.log(tracks.id);
+        Album.findOneAndUpdate({_id: req.params.id}, {$push: {tracks: tracks.id}}, (err)=>{
+            res.send({message: 'Album ajouté'});
+        });
         
-        Album.findOneAndUpdate({_id: req.params.id}, {$push: {tracks: tracks.id}});
-        console.log('params'+req.params.id);
-        console.log('tracks'+tracks.id);
-        
-        res.send({message: 'Musique ajoutée'});
     });  
+    
 });
 
 router.put('/albums/:id', (req, res)=>{
