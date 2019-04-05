@@ -4,6 +4,12 @@ var Album = require('../models/albums');
 var ex = require('express');
 var router = ex.Router();
 
+router.use(function(req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    next();
+  }); 
+
 //Pour afficher toutes les entrées de la BDD
 router.get('/artists', function(req, res){
     console.log('get all artists');
@@ -11,8 +17,6 @@ router.get('/artists', function(req, res){
         if (err){
             return res.send(err);
         }
-        res.header("Access-Control-Allow-Origin", "*");
-        res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
         res.json(artists);
     });
 });
@@ -24,8 +28,6 @@ router.post('/artists', function(req, res){
         if (err){
             return res.send(err);
         }
-        res.header("Access-Control-Allow-Origin", "*");
-        res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
         res.send({message: 'Artist added'});
     });  
 });
@@ -36,8 +38,6 @@ router.get('/artists/:id', (req, res)=>{
         if(err){
             return res.send(err);
         }
-        res.header("Access-Control-Allow-Origin", "*");
-        res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
         res.json(artist);
     });
 });
@@ -49,15 +49,13 @@ router.get('/artists/:id/followers', (req, res)=>{
         if(err){
             return res.send(err);
         }
-        res.header("Access-Control-Allow-Origin", "*");
-        res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
         res.json(artist.followers);
     });
 });
 
 //Ici, on va essayer d'afficher les likes de tous les albums de l'artiste, d'où le chemin /likes
 router.get('/artists/:id/likes', (req, res)=>{
-    var likes=0;
+    likes=0;
     comptMusic = 0;
     nbrMusic = 0;
     Artist.findOne({_id: req.params.id}, (err, artist)=>{
@@ -66,7 +64,7 @@ router.get('/artists/:id/likes', (req, res)=>{
         }
 
         //On commence une première boucle pour parcourir la liste des albums
-        artist.Albums.forEach((item, array) => {
+        artist.albums.forEach((item, array) => {
             Album.findById(item, (err, album) =>{
                 if(err){
                     return res.send(err);
@@ -90,9 +88,7 @@ router.get('/artists/:id/likes', (req, res)=>{
 
                         //Si le compteur de musiques atteint le nombre total de musiques, on peut retourner le résultat (res.json)
                         if(comptMusic == nbrMusic){
-                            console.log('Le total de like pour TayTay est de : ' + likes);
-                            res.header("Access-Control-Allow-Origin", "*");
-                            res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+                            console.log('Le total de likes pour TayTay est de : ' + likes);
                             res.json(likes);
                         };
                     });        
@@ -113,7 +109,7 @@ router.get('/artists/:id/listenings', (req, res)=>{
             return res.send(err);
         }
         //boucle pour parcourir les albums
-         artist.Albums.forEach((item, array) => {
+         artist.albums.forEach((item, array) => {
             Album.findById(item, (err, album) =>{
                 if(err){
                     return res.send(err);
@@ -136,8 +132,6 @@ router.get('/artists/:id/listenings', (req, res)=>{
                         //Si le compteur de musiques atteint le nombre total de musiques, on peut retourner le résultat (res.json)
                         if(comptMusic == nbrMusic){
                             console.log('Le total d écoutes pour TayTay est de : ' + listenings);
-                            res.header("Access-Control-Allow-Origin", "*");
-                            res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
                             res.json(listenings);
                         };
                     });
@@ -154,8 +148,6 @@ router.delete('/artists/:id', (req,res)=>{
             console.log('its an error');
             return res.send(err);
         }
-        res.header("Access-Control-Allow-Origin", "*");
-        res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
         res.json({message: 'Artist deleted'});
     });
 });

@@ -6,7 +6,6 @@ var tracks = require('./routes/tracks');
 var artists = require('./routes/artists');
 var stats = require('./routes/globalstats');
 var app = ex();
-//var ax = require('axios');
 
 var dbName = 'ProjectDB';
 var connectionString = 'mongodb://localhost:27017/' + dbName;
