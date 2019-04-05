@@ -166,7 +166,7 @@ router.post('/artists/:id/album', function(req, res){
         if (err){
             return res.send(err);
         }
-        res.send({message: 'Album added'});
+        res.send({message: 'Album ajouté'});
     });  
 });
 

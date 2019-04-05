@@ -25,7 +25,7 @@ router.post('/albums', function(req, res){
         if (err){
             return res.send(err);
         }
-        res.send({message: 'Album added'});
+        res.send({message: 'Album ajouté'});
     });  
 });
 
@@ -48,9 +48,8 @@ router.get('/albums/:id/tracks', (req, res)=>{
         if(err){
             return res.send(err);
         }
-        album.tracks.forEach((track, array)=>{
-            songs.push(track);
-            res.json(songs);
+        Track.find({"_id" : { "$in" : album.tracks}}, (err, track)=>{
+            res.json(track);
         });
     });
 });
