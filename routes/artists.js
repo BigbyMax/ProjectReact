@@ -172,15 +172,7 @@ router.put('/artists/:id', (req, res)=>{
 
 
 
-router.post('/artists/:id/album', function(req, res){
-    var album = new Album(req.body);
-    album.save(function(err){
-        if (err){
-            return res.send(err);
-        }
-        res.send({message: 'Album ajouté'});
-    });  
-});
+
 
 router.post('/artists/:id/albums', function(req, res){
 
@@ -189,7 +181,6 @@ router.post('/artists/:id/albums', function(req, res){
         if (err){
             return res.send(err);
         }
-        console.log(tracks.id);
         Artist.findOneAndUpdate({_id: req.params.id}, {$push: {albums: albums.id}}, (err)=>{
             res.send({message: 'Album ajouté'});
         });
